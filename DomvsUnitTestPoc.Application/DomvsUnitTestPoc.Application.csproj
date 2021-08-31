@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DomvsUnitTestPoc.Domain\DomvsUnitTestPoc.Domain.csproj" />
+    <ProjectReference Include="..\DomvsUnitTestPoc.Infrastructure\DomvsUnitTestPoc.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
