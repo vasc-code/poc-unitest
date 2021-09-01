@@ -1,14 +1,24 @@
 ﻿using DomvsUnitTestPoc.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using System;
 
 namespace DomvsUnitTestPoc.Infrastructure.Contexts
 {
     public class TransactionContext : DbContext
     {
+        public readonly string connectionString;
+
         public TransactionContext(DbContextOptions<TransactionContext> options) : base(options)
         {
+            connectionString = this.Database.GetConnectionString();
         }
+
+        public MySqlConnection GetConnection()
+        {
+            return new MySqlConnection(this.connectionString);
+        }
+
         public DbSet<SaleEntity> SaleEntity { get; set; }
         public DbSet<ProductEntity> ProductEntity { get; set; }
 

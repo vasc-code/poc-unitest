@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dapper;
 using DomvsUnitTestPoc.Domain.DTOs;
 using DomvsUnitTestPoc.Domain.Entities;
 using DomvsUnitTestPoc.Domain.Interfaces;
@@ -8,6 +9,7 @@ using DomvsUnitTestPoc.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -112,6 +114,39 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
             var result = await _dbContext.ProductEntity.Where(a => ids.Contains(a.Id)).ToListAsync();
             var response = result.Select(a => _mapper.Map<Product>(a)).ToList();
             return response;
+        }
+
+        public async Task<PagedModel<Product>> ListProductsAsync(string likeName)
+        {
+            using (var con = _dbContext.GetConnection())
+            {
+                var sql = "" +
+                    " USE       domvsunittestpocdb;" +
+                    " SELECT 	* " +
+                    " FROM 		product" +
+                    " WHERE 	Name like concat('%',@searchText,'%');" +
+                    " SELECT 	* " +
+                    " FROM 		product" +
+                    " WHERE 	Price > 2;";
+                var reader = await con.QueryMultipleAsync(sql, new
+                {
+                    searchText = likeName ?? string.Empty
+                }, commandType: CommandType.Text);
+                var first = reader.Read<ProductEntity>().ToList();
+                var second = reader.Read<ProductEntity>().ToList();
+                first.AddRange(second);
+                var mapped = first.Select(a => _mapper.Map<Product>(a)).ToList();
+                var count = first.Count();
+
+                return new PagedModel<Product>()
+                {
+                    CurrentPage = 1,
+                    PageSize = 1,
+                    TotalItems = count,
+                    TotalPages = (count / 1) + 1,
+                    Items = mapped
+                };
+            }
         }
     }
 }

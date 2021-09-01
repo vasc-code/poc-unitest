@@ -16,5 +16,6 @@ namespace DomvsUnitTestPoc.Domain.Interfaces
         public Task<Product> GetAsync(long id);
         public Task<PagedModel<Product>> ListAsync(int size, int start, int page);
         public Task<IList<Product>> ListAsync(IList<long> ids);
+        public Task<PagedModel<Product>> ListProductsAsync(string likeName);
     }
 }

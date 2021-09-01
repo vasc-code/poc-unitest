@@ -2,6 +2,8 @@ using AutoMapper;
 using DomvsUnitTestPoc.Application.AutoMappers;
 using DomvsUnitTestPoc.Application.Commands;
 using DomvsUnitTestPoc.Application.Handlers;
+using DomvsUnitTestPoc.Application.Queries;
+using DomvsUnitTestPoc.Domain.DTOs;
 using DomvsUnitTestPoc.Domain.Entities;
 using DomvsUnitTestPoc.Domain.Interfaces;
 using DomvsUnitTestPoc.Exposure.AutoMappers;
@@ -54,6 +56,7 @@ namespace DomvsUnitTestPoc.Exposure
             services.AddTransient<ISaleRepository, SaleRepository>();
             services.AddTransient<IRequestHandler<CreateSaleCommand, bool>, CreateSaleHandler>();
             services.AddTransient<IRequestHandler<CreateProductCommand, bool>, CreateProductHandler>();
+            services.AddTransient<IRequestHandler<ListProductCommand, PagedModel<Product>>, ListProductQuery>();
             var mapperConfig = new MapperConfiguration(a =>
             {
                 a.AddProfile<AutoMappingExposure>();
