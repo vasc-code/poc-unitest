@@ -46,7 +46,6 @@ namespace DomvsUnitTestPoc.Application.Handlers
                 await _saleRepository.RollbackAsync();
                 throw;
             }
-            return false;
         }
     }
 }

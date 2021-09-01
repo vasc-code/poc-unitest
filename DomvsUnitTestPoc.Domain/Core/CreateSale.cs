@@ -1,4 +1,5 @@
-﻿using DomvsUnitTestPoc.Domain.DTOs;
+﻿using DomvsUnitTestPoc.Domain.Constants;
+using DomvsUnitTestPoc.Domain.DTOs;
 using DomvsUnitTestPoc.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace DomvsUnitTestPoc.Domain.Core
             {
                 if (!products.Any(a => a.Id == sale.ProductId))
                 {
-                    throw new Exception("Um produto do carrinho não está cadastrado.");
+                    throw new Exception(DomainConstants.ProductUnknow);
                 }
             }
             foreach (var product in products)
@@ -25,7 +26,7 @@ namespace DomvsUnitTestPoc.Domain.Core
                 var soldAmount = sales.Where(a => a.ProductId == product.Id).Sum(a => a.ProductQuantity);
                 if (product.Quantity < soldAmount)
                 {
-                    throw new Exception("Um produto não tem quantidade suficiente no estoque.");
+                    throw new Exception(DomainConstants.ProductLessThanQuantity);
                 }
             }
             this.products = products;
@@ -34,12 +35,14 @@ namespace DomvsUnitTestPoc.Domain.Core
 
         public CreateSaleResponse Calculate()
         {
+            this.sales.ForEach(a => a.UpdateAt = DateTime.Now);
             var sales = this.sales;
             var products = new List<Product>();
             foreach (var product in this.products)
             {
                 var soldAmount = sales.Where(a => a.ProductId == product.Id).Sum(a => a.ProductQuantity);
                 product.Quantity = product.Quantity - soldAmount;
+                product.UpdateAt = DateTime.Now;
                 products.Add(product);
             }
 

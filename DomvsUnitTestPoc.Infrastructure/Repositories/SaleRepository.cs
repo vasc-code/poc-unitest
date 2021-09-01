@@ -2,6 +2,7 @@
 using DomvsUnitTestPoc.Domain.DTOs;
 using DomvsUnitTestPoc.Domain.Entities;
 using DomvsUnitTestPoc.Domain.Interfaces;
+using DomvsUnitTestPoc.Infrastructure.Constants;
 using DomvsUnitTestPoc.Infrastructure.Contexts;
 using DomvsUnitTestPoc.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,12 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
 
         public async Task CreateAsync(Sale sale)
         {
-            if (string.IsNullOrWhiteSpace(sale.ProductName)
-               || sale.ProductPrice <= 0
-               || sale.ProductQuantity <= 0
-               || sale.Id > 0)
+            if (string.IsNullOrWhiteSpace(sale?.ProductName)
+               || sale?.ProductPrice <= 0
+               || sale?.ProductQuantity <= 0
+               || sale?.Id > 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var entity = _mapper.Map<SaleEntity>(sale);
             await _dbContext.AddAsync(entity);
