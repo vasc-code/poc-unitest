@@ -61,7 +61,7 @@ namespace DomvsUnitTestPoc.ApplicationTest.Handlers
             saleRepository.Received(1).BeginTransactionAsync();
             productRepository.Received(1).ListAsync(Arg.Any<List<long>>());
             productRepository.Received(1).UpdateAsync(Arg.Any<Product>());
-            saleRepository.Received(1).UpdateAsync(Arg.Any<Sale>());
+            saleRepository.Received(1).CreateAsync(Arg.Any<Sale>());
             saleRepository.Received(1).CommitAsync();
             saleRepository.Received(0).RollbackAsync();
         }

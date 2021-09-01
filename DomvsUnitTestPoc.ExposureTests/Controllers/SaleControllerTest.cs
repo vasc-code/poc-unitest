@@ -136,7 +136,6 @@ namespace DomvsUnitTestPoc.ExposureTests.Controllers
             });
 
             //Act
-            //Act
             IActionResult response = null;
             Func<Task> run = async () =>
             {
@@ -151,11 +150,11 @@ namespace DomvsUnitTestPoc.ExposureTests.Controllers
             received.Should().NotBeNull();
             received.Sales.Should().HaveCount(1);
             var receivedFirst = received.Sales.FirstOrDefault();
-            receivedFirst.Id.Should().Equals(body.First().Id);
-            receivedFirst.ProductId.Should().Equals(body.First().ProductId);
-            receivedFirst.ProductName.Should().Equals(body.First().ProductName);
-            receivedFirst.ProductPrice.Should().Equals(body.First().ProductPrice);
-            receivedFirst.ProductQuantity.Should().Equals(body.First().ProductQuantity);
+            receivedFirst.Id.Should().Be(body.First().Id);
+            receivedFirst.ProductId.Should().Be(body.First().ProductId);
+            receivedFirst.ProductName.Should().Be(body.First().ProductName);
+            receivedFirst.ProductPrice.Should().Be(body.First().ProductPrice);
+            receivedFirst.ProductQuantity.Should().Be(body.First().ProductQuantity);
         }
     }
 }

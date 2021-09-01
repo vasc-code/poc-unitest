@@ -40,7 +40,7 @@ namespace DomvsUnitTestPoc.DomainTests.Core
                 }
             };
 
-            ////Act
+            //Act
             CreateSaleResponse createSaleResponse = null;
             Action run = () =>
             {
@@ -54,11 +54,11 @@ namespace DomvsUnitTestPoc.DomainTests.Core
             createSaleResponse.Sales.Should().HaveCount(1);
             createSaleResponse.Products.Should().HaveCount(1);
             var product = createSaleResponse.Products.First();
-            product.Quantity.Should().Equals(50);
+            product.Quantity.Should().Be(50);
             product.UpdateAt.Should().NotBeNull();
-            product.UpdateAt.Value.Date.Should().Equals(DateTime.Now.Date);
+            product.UpdateAt.Value.Date.Should().Be(DateTime.Now.Date);
             var sale = createSaleResponse.Sales.First();
-            product.UpdateAt.Value.Date.Should().Equals(DateTime.Now.Date);
+            product.UpdateAt.Value.Date.Should().Be(DateTime.Now.Date);
         }
         [Fact]
         public void Should_Throws_When_Execute_CreateSale_With_Quantity_Less_Than_Saled_Parametters()
@@ -88,7 +88,7 @@ namespace DomvsUnitTestPoc.DomainTests.Core
                 }
             };
 
-            ////Act
+            //Act
             CreateSaleResponse createSaleResponse = null;
             Action run = () =>
             {
@@ -117,7 +117,7 @@ namespace DomvsUnitTestPoc.DomainTests.Core
                 }
             };
 
-            ////Act
+            //Act
             CreateSaleResponse createSaleResponse = null;
             Action run = () =>
             {
