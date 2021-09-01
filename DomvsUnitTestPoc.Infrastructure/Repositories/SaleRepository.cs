@@ -43,13 +43,13 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
                || sale.ProductQuantity <= 0
                || sale.Id <= 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var entity = _mapper.Map<SaleEntity>(sale);
             var exists = await _dbContext.ProductEntity.FirstOrDefaultAsync(a => a.Id == entity.Id);
             if (exists == null)
             {
-                throw new Exception("Produto não pode ser alterado pois não existe");
+                throw new Exception(InfrastructureConstants.ProductNotExistsForUpdate);
             }
             entity.Id = exists.Id;
             _dbContext.Entry(exists).CurrentValues.SetValues(entity);
@@ -59,13 +59,13 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
         {
             if (sale.Id <= 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var entity = _mapper.Map<SaleEntity>(sale);
             var exists = await _dbContext.ProductEntity.FirstOrDefaultAsync(a => a.Id == entity.Id);
             if (exists == null)
             {
-                throw new Exception("Produto não pode ser excluído pois não existe");
+                throw new Exception(InfrastructureConstants.ProductNotExistsForDelete);
             }
             _dbContext.ProductEntity.Remove(exists);
         }
@@ -74,7 +74,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
         {
             if (id <= 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var exists = await _dbContext.SaleEntity.FirstOrDefaultAsync(a => a.Id == id);
             var entity = _mapper.Map<Sale>(exists);
@@ -87,7 +87,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
                 || start < 0
                 || page < 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var count = await _dbContext.SaleEntity.CountAsync();
             var result = await _dbContext.SaleEntity.Skip(start).Take(size).ToListAsync();

@@ -1,4 +1,5 @@
 using AutoMapper;
+using DomvsUnitTestPoc.Application.AutoMappers;
 using DomvsUnitTestPoc.Application.Commands;
 using DomvsUnitTestPoc.Application.Handlers;
 using DomvsUnitTestPoc.Domain.Entities;
@@ -47,14 +48,17 @@ namespace DomvsUnitTestPoc.Exposure
             services.AddAutoMapper(
                 typeof(Startup),
                 typeof(AutoMappingInfrastructure),
-                typeof(AutoMappingExposure));
+                typeof(AutoMappingExposure),
+                typeof(AutoMappingApplication));
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ISaleRepository, SaleRepository>();
             services.AddTransient<IRequestHandler<CreateSaleCommand, bool>, CreateSaleHandler>();
+            services.AddTransient<IRequestHandler<CreateProductCommand, bool>, CreateProductHandler>();
             var mapperConfig = new MapperConfiguration(a =>
             {
-                a.AddProfile<AutoMappingInfrastructure>();
                 a.AddProfile<AutoMappingExposure>();
+                a.AddProfile<AutoMappingApplication>();
+                a.AddProfile<AutoMappingInfrastructure>();
             });
             var mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);

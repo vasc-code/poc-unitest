@@ -2,6 +2,7 @@
 using DomvsUnitTestPoc.Domain.DTOs;
 using DomvsUnitTestPoc.Domain.Entities;
 using DomvsUnitTestPoc.Domain.Interfaces;
+using DomvsUnitTestPoc.Infrastructure.Constants;
 using DomvsUnitTestPoc.Infrastructure.Contexts;
 using DomvsUnitTestPoc.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
                || product.Quantity <= 0
                || product.Id > 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var entity = _mapper.Map<ProductEntity>(product);
             await _dbContext.AddAsync(entity);
@@ -43,13 +44,13 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
                || product.Quantity <= 0
                || product.Id <= 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var entity = _mapper.Map<ProductEntity>(product);
             var exists = await _dbContext.ProductEntity.FirstOrDefaultAsync(a => a.Id == entity.Id);
             if (exists == null)
             {
-                throw new Exception("Produto não pode ser alterado pois não existe");
+                throw new Exception(InfrastructureConstants.ProductNotExistsForUpdate);
             }
             entity.Id = exists.Id;
             _dbContext.Entry(exists).CurrentValues.SetValues(entity);
@@ -59,13 +60,13 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
         {
             if (product.Id <= 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var entity = _mapper.Map<ProductEntity>(product);
             var exists = await _dbContext.ProductEntity.FirstOrDefaultAsync(a => a.Id == entity.Id);
             if (exists == null)
             {
-                throw new Exception("Produto não pode ser excluído pois não existe");
+                throw new Exception(InfrastructureConstants.ProductNotExistsForDelete);
             }
             _dbContext.ProductEntity.Remove(exists);
         }
@@ -74,7 +75,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
         {
             if (id <= 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var exists = await _dbContext.ProductEntity.FirstOrDefaultAsync(a => a.Id == id);
             var entity = _mapper.Map<Product>(exists);
@@ -87,7 +88,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
                 || start < 0
                 || page < 0)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var count = await _dbContext.ProductEntity.CountAsync();
             var result = await _dbContext.ProductEntity.Skip(start).Take(size).ToListAsync();
@@ -106,7 +107,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
         {
             if (!ids?.Any() ?? false)
             {
-                throw new Exception("Dados inválidos");
+                throw new Exception(InfrastructureConstants.InvalidData);
             }
             var result = await _dbContext.ProductEntity.Where(a => ids.Contains(a.Id)).ToListAsync();
             var response = result.Select(a => _mapper.Map<Product>(a)).ToList();

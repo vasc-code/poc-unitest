@@ -32,12 +32,13 @@ namespace DomvsUnitTestPoc.Application.Handlers
                 await _saleRepository.BeginTransactionAsync();
                 foreach (var item in response.Sales)
                 {
-                    await _saleRepository.UpdateAsync(item);
+                    await _saleRepository.CreateAsync(item);
                 }
                 foreach (var item in response.Products)
                 {
                     await _productRepository.UpdateAsync(item);
                 }
+                await _saleRepository.SaveAsync();
                 await _saleRepository.CommitAsync();
                 return true;
             }

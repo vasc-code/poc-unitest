@@ -1,4 +1,5 @@
 ﻿using DomvsUnitTestPoc.Domain.Interfaces;
+using DomvsUnitTestPoc.Infrastructure.Constants;
 using DomvsUnitTestPoc.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -24,7 +25,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
             }
             else
             {
-                throw new Exception("The transaction has alredy started previously");
+                throw new Exception(InfrastructureConstants.TransactionStarted);
             }
         }
 
@@ -36,7 +37,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
             }
             else
             {
-                throw new Exception("The transaction was not started previously");
+                throw new Exception(InfrastructureConstants.TransactionNotStarted);
             }
 
             _transaction = null;
@@ -50,7 +51,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
             }
             else
             {
-                throw new Exception("The transaction was not started previously");
+                throw new Exception(InfrastructureConstants.TransactionNotStarted);
             }
         }
 
