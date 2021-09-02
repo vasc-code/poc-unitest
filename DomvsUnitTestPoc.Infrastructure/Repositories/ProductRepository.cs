@@ -122,12 +122,22 @@ namespace DomvsUnitTestPoc.Infrastructure.Repositories
             {
                 var sql = "" +
                     " USE       domvsunittestpocdb;" +
-                    " SELECT 	* " +
-                    " FROM 		product" +
-                    " WHERE 	Name like concat('%',@searchText,'%');" +
-                    " SELECT 	* " +
-                    " FROM 		product" +
-                    " WHERE 	Price > 2;";
+                    " SELECT 	p.ID as Id," +
+                    "           p.NOME as Name, " +
+                    "           p.PRECO as Price, " +
+                    "           p.QUANTIDADE as Quantity, " +
+                    "           p.CRIADO_EM as CreateAt, " +
+                    "           p.ATUALIZADO_EM as UpdateAt " +
+                    " FROM 		produto p" +
+                    " WHERE 	NOME like concat('%',@searchText,'%');" +
+                    " SELECT 	p.ID as Id," +
+                    "           p.NOME as Name, " +
+                    "           p.PRECO as Price, " +
+                    "           p.QUANTIDADE as Quantity, " +
+                    "           p.CRIADO_EM as CreateAt, " +
+                    "           p.ATUALIZADO_EM as UpdateAt " +
+                    " FROM 		produto p" +
+                    " WHERE 	PRECO > 2;";
                 var reader = await con.QueryMultipleAsync(sql, new
                 {
                     searchText = likeName ?? string.Empty

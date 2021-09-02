@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DomvsUnitTestPoc.Infrastructure.Migrations
 {
     [DbContext(typeof(TransactionContext))]
-    [Migration("20210831074954_First_Migration")]
+    [Migration("20210902143650_First_Migration")]
     partial class First_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,32 +25,38 @@ namespace DomvsUnitTestPoc.Infrastructure.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
+                        .HasColumnName("ID")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CRIADO_EM");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("NOME");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("PRECO");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("QUANTIDADE");
 
                     b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("ATUALIZADO_EM");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("PRODUTO");
 
                     b.HasData(
                         new
                         {
                             Id = 1L,
-                            CreateAt = new DateTime(2021, 8, 31, 4, 49, 53, 676, DateTimeKind.Local).AddTicks(793),
+                            CreateAt = new DateTime(2021, 9, 2, 11, 36, 50, 8, DateTimeKind.Local).AddTicks(8717),
                             Name = "Lápis Faber Castel",
                             Price = 1.29m,
                             Quantity = 100
@@ -62,31 +68,38 @@ namespace DomvsUnitTestPoc.Infrastructure.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
+                        .HasColumnName("ID")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CRIADO_EM");
 
                     b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("ID_PRODUTO");
 
                     b.Property<string>("ProductName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("NOME_PRODUTO");
 
                     b.Property<decimal>("ProductPrice")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("PRECO_PRODUTO");
 
                     b.Property<int>("ProductQuantity")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("QUANTIDADE_VENDIDA");
 
                     b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("ATUALIZADO_EM");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Sale");
+                    b.ToTable("VENDAS");
                 });
 
             modelBuilder.Entity("DomvsUnitTestPoc.Infrastructure.Entities.SaleEntity", b =>
