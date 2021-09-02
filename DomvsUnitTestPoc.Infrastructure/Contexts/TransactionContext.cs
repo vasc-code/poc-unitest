@@ -11,7 +11,11 @@ namespace DomvsUnitTestPoc.Infrastructure.Contexts
 
         public TransactionContext(DbContextOptions<TransactionContext> options) : base(options)
         {
-            connectionString = this.Database.GetConnectionString();
+            if (this.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                connectionString = this.Database.GetConnectionString();
+            }
+            connectionString = "";
         }
 
         public MySqlConnection GetConnection()

@@ -47,26 +47,10 @@ namespace DomvsUnitTestPoc.Exposure
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DomvsUnitTestPoc.Exposure", Version = "v1" });
             });
-            services.AddAutoMapper(
-                typeof(Startup),
-                typeof(AutoMappingInfrastructure),
-                typeof(AutoMappingExposure),
-                typeof(AutoMappingApplication));
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<ISaleRepository, SaleRepository>();
-            services.AddTransient<IRequestHandler<CreateSaleCommand, bool>, CreateSaleHandler>();
-            services.AddTransient<IRequestHandler<CreateProductCommand, bool>, CreateProductHandler>();
-            services.AddTransient<IRequestHandler<ListProductCommand, PagedModel<Product>>, ListProductQuery>();
-            var mapperConfig = new MapperConfiguration(a =>
-            {
-                a.AddProfile<AutoMappingExposure>();
-                a.AddProfile<AutoMappingApplication>();
-                a.AddProfile<AutoMappingInfrastructure>();
-            });
-            var mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            dependencyInjection(services);
             services.AddMvc();
         }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -82,6 +66,28 @@ namespace DomvsUnitTestPoc.Exposure
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void dependencyInjection(IServiceCollection services)
+        {
+            services.AddAutoMapper(
+                            typeof(Startup),
+                            typeof(AutoMappingInfrastructure),
+                            typeof(AutoMappingExposure),
+                            typeof(AutoMappingApplication));
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ISaleRepository, SaleRepository>();
+            services.AddTransient<IRequestHandler<CreateSaleCommand, bool>, CreateSaleHandler>();
+            services.AddTransient<IRequestHandler<CreateProductCommand, bool>, CreateProductHandler>();
+            services.AddTransient<IRequestHandler<ListProductCommand, PagedModel<Product>>, ListProductQuery>();
+            var mapperConfig = new MapperConfiguration(a =>
+            {
+                a.AddProfile<AutoMappingExposure>();
+                a.AddProfile<AutoMappingApplication>();
+                a.AddProfile<AutoMappingInfrastructure>();
+            });
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }
