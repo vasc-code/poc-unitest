@@ -15,7 +15,10 @@ namespace DomvsUnitTestPoc.Infrastructure.Contexts
             {
                 connectionString = this.Database.GetConnectionString();
             }
-            connectionString = "";
+            else
+            {
+                connectionString = "";
+            }
         }
 
         public MySqlConnection GetConnection()

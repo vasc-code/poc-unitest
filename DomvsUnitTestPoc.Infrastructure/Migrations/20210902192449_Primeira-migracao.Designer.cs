@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DomvsUnitTestPoc.Infrastructure.Migrations
 {
     [DbContext(typeof(TransactionContext))]
-    [Migration("20210902143650_First_Migration")]
-    partial class First_Migration
+    [Migration("20210902192449_Primeira-migracao")]
+    partial class Primeiramigracao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,7 +56,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreateAt = new DateTime(2021, 9, 2, 11, 36, 50, 8, DateTimeKind.Local).AddTicks(8717),
+                            CreateAt = new DateTime(2021, 9, 2, 16, 24, 48, 990, DateTimeKind.Local).AddTicks(8873),
                             Name = "Lápis Faber Castel",
                             Price = 1.29m,
                             Quantity = 100

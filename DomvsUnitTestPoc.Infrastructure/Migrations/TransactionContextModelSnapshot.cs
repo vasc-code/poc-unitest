@@ -54,7 +54,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreateAt = new DateTime(2021, 9, 2, 11, 36, 50, 8, DateTimeKind.Local).AddTicks(8717),
+                            CreateAt = new DateTime(2021, 9, 2, 16, 24, 48, 990, DateTimeKind.Local).AddTicks(8873),
                             Name = "Lápis Faber Castel",
                             Price = 1.29m,
                             Quantity = 100

@@ -23,7 +23,7 @@ namespace DomvsUnitTestPoc.InfrastructureTest.Repositories
                 a.AddProfile(new AutoMappingInfrastructure());
             });
             var mapper = mapperConfig.CreateMapper();
-            var optionsDb = new DbContextOptionsBuilder<TransactionContext>().UseInMemoryDatabase(databaseName: "teste").Options;
+            var optionsDb = new DbContextOptionsBuilder<TransactionContext>().UseInMemoryDatabase(databaseName: "DomvsUnitTestPocDb").Options;
             using (var contextx = new TransactionContext(optionsDb))
             {
                 var repository = new SaleRepository(contextx, mapper);

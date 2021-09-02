@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DomvsUnitTestPoc.Infrastructure.Migrations
 {
-    public partial class First_Migration : Migration
+    public partial class Primeiramigracao : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,7 +59,7 @@ namespace DomvsUnitTestPoc.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "PRODUTO",
                 columns: new[] { "ID", "CRIADO_EM", "NOME", "PRECO", "QUANTIDADE", "ATUALIZADO_EM" },
-                values: new object[] { 1L, new DateTime(2021, 9, 2, 11, 36, 50, 8, DateTimeKind.Local).AddTicks(8717), "Lápis Faber Castel", 1.29m, 100, null });
+                values: new object[] { 1L, new DateTime(2021, 9, 2, 16, 24, 48, 990, DateTimeKind.Local).AddTicks(8873), "Lápis Faber Castel", 1.29m, 100, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_VENDAS_ID_PRODUTO",
